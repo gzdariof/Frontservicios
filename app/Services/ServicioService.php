@@ -14,9 +14,11 @@ class ServicioService
     public function __construct()
     {
         $this->baseUrl = rtrim(env('API_BASE_URL', 'http://localhost:5216'), '/');
+
         $this->client = new Client([
             'base_uri' => $this->baseUrl,
             'timeout'  => 10,
+            'verify'   => false, // ◄--- AGREGA ESTA LÍNEA
             'headers'  => [
                 'Content-Type' => 'application/json',
                 'Accept'       => 'application/json',
@@ -27,7 +29,7 @@ class ServicioService
     public function getAll(): array
     {
         try {
-            $response = $this->client->get('/servicios');
+            $response = $this->client->get('/Servicios');
             return json_decode($response->getBody()->getContents(), true) ?? [];
         } catch (RequestException $e) {
             Log::error('ServicioService::getAll - ' . $e->getMessage());
@@ -38,7 +40,7 @@ class ServicioService
     public function getById(int $id): ?array
     {
         try {
-            $response = $this->client->get("/servicios/{$id}");
+            $response = $this->client->get("/Servicios/{$id}");
             return json_decode($response->getBody()->getContents(), true);
         } catch (RequestException $e) {
             Log::error("ServicioService::getById({$id}) - " . $e->getMessage());
@@ -49,7 +51,7 @@ class ServicioService
     public function create(array $data): array
     {
         try {
-            $response = $this->client->post('/servicios', [
+            $response = $this->client->post('/Servicios', [
                 'json' => $data,
             ]);
             return [
@@ -71,7 +73,7 @@ class ServicioService
     public function update(int $id, array $data): array
     {
         try {
-            $response = $this->client->put("/servicios/{$id}", [
+            $response = $this->client->put("/Servicios/{$id}", [
                 'json' => $data,
             ]);
             return [
@@ -93,7 +95,7 @@ class ServicioService
     public function delete(int $id): array
     {
         try {
-            $response = $this->client->delete("/servicios/{$id}");
+            $response = $this->client->delete("/Servicios/{$id}");
             return [
                 'success' => true,
                 'status'  => $response->getStatusCode(),
