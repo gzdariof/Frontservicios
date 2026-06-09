@@ -18,7 +18,7 @@ class ServicioService
         $this->client = new Client([
             'base_uri' => $this->baseUrl,
             'timeout'  => 10,
-            'verify'   => false, // ◄--- AGREGA ESTA LÍNEA
+            'verify'   => false,
             'headers'  => [
                 'Content-Type' => 'application/json',
                 'Accept'       => 'application/json',
